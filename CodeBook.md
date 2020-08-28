@@ -7,8 +7,7 @@ Type.
 ACTIVITY: can have six values as follows:
     WALKING-WALKING_UPSTAIRS-WALKING_DOWNSTAIRS-SITTING-STANDING-LAYING
 
-Type: Specify if the values comes from test dataset (test value) 
-or training dataset (train value).
+Subject: specify the subject id
 
 Each of the all remainings variables represents the mean of the respective 
 variable in the UCI dataset: 
