@@ -9,10 +9,6 @@ part14 <- function(testdf, traindf){
     trainlabel <- merge(trainlabel, activity, by.x = "V1", sort=F)
     trainlabel <- trainlabel$V2
     rm(activity)
-    typetest <- rep("test", nrow(testdf))
-    typetrain <- rep("train", nrow(traindf))
-    type <- c(typetest, typetrain)
-    rm(typetest, typetrain)
     features <- read.table("./UCI\ HAR\ Dataset/features.txt")
     testdf <- set_names(testdf, features$V2)
     traindf <- set_names(traindf, features$V2)
@@ -21,9 +17,14 @@ part14 <- function(testdf, traindf){
     rm(features)
     colnames(testdf)[562] <- "activity"
     colnames(traindf)[562] <- "activity"
+    subjectrain <- read.table("./UCI\ HAR\ Dataset/subject_train.txt")
+    subjectest <- read.table("./UCI\ HAR\ Dataset/subject_test.txt")
+    cbind(testdf, subjectest)
+    cbind(traindf, subjectrain)
+    colnames(testdf)[563] <- "subject"
+    colnames(traindf)[563] <- "subject"
     res <- rbind(testdf, traindf)
     res <- select(res, grep("[M|m]ean|std|activity", colnames(res), value=T))
-    res <- cbind(res, type)
     rm(testlabel)
     rm(trainlabel)
     ##write.csv(res, "./res1.csv")
