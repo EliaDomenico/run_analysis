@@ -17,8 +17,8 @@ part14 <- function(testdf, traindf){
     rm(features)
     colnames(testdf)[562] <- "activity"
     colnames(traindf)[562] <- "activity"
-    subjectrain <- read.table("./UCI\ HAR\ Dataset/subject_train.txt")
-    subjectest <- read.table("./UCI\ HAR\ Dataset/subject_test.txt")
+    subjectrain <- read.table("./UCI\ HAR\ Dataset/train/subject_train.txt")
+    subjectest <- read.table("./UCI\ HAR\ Dataset/test/subject_test.txt")
     cbind(testdf, subjectest)
     cbind(traindf, subjectrain)
     colnames(testdf)[563] <- "subject"
