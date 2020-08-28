@@ -19,12 +19,12 @@ part14 <- function(testdf, traindf){
     colnames(traindf)[562] <- "activity"
     subjectrain <- read.table("./UCI\ HAR\ Dataset/train/subject_train.txt")
     subjectest <- read.table("./UCI\ HAR\ Dataset/test/subject_test.txt")
-    cbind(testdf, subjectest)
-    cbind(traindf, subjectrain)
+    testdf <- cbind(testdf, subjectest)
+    traindf <- cbind(traindf, subjectrain)
     colnames(testdf)[563] <- "subject"
     colnames(traindf)[563] <- "subject"
     res <- rbind(testdf, traindf)
-    res <- select(res, grep("[M|m]ean|std|activity", colnames(res), value=T))
+    res <- select(res, grep("[M|m]ean|std|activity|subject", colnames(res), value=T))
     rm(testlabel)
     rm(trainlabel)
     ##write.csv(res, "./res1.csv")
