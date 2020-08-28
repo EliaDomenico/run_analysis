@@ -7,7 +7,8 @@ the mean of all mean and std variables, grouped by activity and type
 You can run this script after sourced it by typing "run()".
 If your UCI folder isn't in your working directory, you can also
 open type and train datasets by yourself and pass them by calling
-"run(name_of_typedataset_variable, name_of_traindataset_variable)" 
+"runscript(name_of_typedataset_variable, name_of_traindataset_variable)" 
+example: runscript(testds, trainds)
 
 part14 is a function that performs part of the datasets analysis, required
 in run function.
