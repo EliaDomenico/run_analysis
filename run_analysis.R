@@ -33,7 +33,7 @@ part14 <- function(testdf, traindf){
 
 runscript <- function(testdf, traindf){
     data <- part14(testdf, traindf)
-    newdata <- aggregate(data, by=list(data$activity, data$type), mean)
+    newdata <- aggregate(data, by=list(data$activity, data$subject), mean)
     newdata <- newdata[,1:88]
     rm(data)
     write.table(newdata, "./dataset.txt", row.name=F)
