@@ -30,7 +30,7 @@ part14 <- function(testdf, traindf){
     res
 }
 
-run <- function(testdf, traindf){
+runscript <- function(testdf, traindf){
     data <- part14(testdf, traindf)
     newdata <- aggregate(data, by=list(data$activity, data$type), mean)
     newdata <- newdata[,1:88]
@@ -42,5 +42,5 @@ run <- function(testdf, traindf){
 run <- function(){
     testdf <- read.table("./UCI\ HAR\ Dataset/test/X_test.txt")
     traindf <- read.table("./UCI\ HAR\ Dataset/train/X_train.txt")
-    run(testdf, traindf)
+    runscript(testdf, traindf)
 }
