@@ -9,7 +9,3 @@ If your UCI folder isn't in your working directory, you can also
 open type and train datasets by yourself and pass them by calling
 "runscript(name_of_typedataset_variable, name_of_traindataset_variable)" 
 example: runscript(testds, trainds)
-
-part14 is a function that performs part of the datasets analysis, required
-in run function.
-I created it to simplify the reading 
