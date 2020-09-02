@@ -4,7 +4,7 @@
 performs a simple analysis in test and train datasets, contained
 in the UCI HAR Dataset folder and returns a new dataframe that contains
 the mean of all mean and std variables, grouped by activity and type
-(see CodeBook.md for further details).
+(see **CodeBook.md** for further details).
 
 You can run this script after sourced it by typing "run()".
 If your UCI folder isn't in your working directory, you can also
