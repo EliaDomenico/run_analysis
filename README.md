@@ -1,3 +1,5 @@
+**README**
+
 "run_analysis" is a simple scrpit written in R language that 
 performs a simple analysis in test and train datasets, contained
 in the UCI HAR Dataset folder and returns a new dataframe that contains
