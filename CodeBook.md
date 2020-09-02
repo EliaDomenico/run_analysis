@@ -1,3 +1,5 @@
+******CODEBOOK******
+
 This is the codebook of run_analysis script.
 
 The script performs all the oeprations (see README.md) and returna a dataset
