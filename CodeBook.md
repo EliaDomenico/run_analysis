@@ -5,10 +5,10 @@ This is the codebook of run_analysis script.
 The script performs all the oeprations (see README.md) and returna a dataset
 in which are present the mean of each variable, grouped by activity and subject.
 
-*activity*: can have six values as follows:
+**activity**: can have six values as follows:
     WALKING - WALKING_UPSTAIRS - WALKING_DOWNSTAIRS - SITTING - STANDING - LAYING
 
-*subject*: specify the subject id
+**subject**: specify the subject id
 
 Each of all remainings variables represents the mean of the respective 
 variable in the UCI dataset: 
