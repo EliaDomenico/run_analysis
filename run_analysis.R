@@ -1,44 +1,41 @@
 library(rlang)
-library(tidyverse)
-part14 <- function(testdf, traindf){
-    activity <- read.table("./UCI\ HAR\ Dataset/activity_labels.txt")
-    testlabel <- read.table("./UCI\ HAR\ Dataset/test/y_test.txt")
-    testlabel <- merge(testlabel, activity, by.x = "V1", sort=F)
-    testlabel <- testlabel$V2
-    trainlabel <- read.table("./UCI\ HAR\ Dataset/train/y_train.txt")
-    trainlabel <- merge(trainlabel, activity, by.x = "V1", sort=F)
-    trainlabel <- trainlabel$V2
-    rm(activity)
-    features <- read.table("./UCI\ HAR\ Dataset/features.txt")
-    testdf <- set_names(testdf, features$V2)
-    traindf <- set_names(traindf, features$V2)
-    testdf <- cbind(testdf, testlabel)
-    traindf <- cbind(traindf, trainlabel)
-    rm(features)
-    colnames(testdf)[562] <- "activity"
-    colnames(traindf)[562] <- "activity"
-    subjectrain <- read.table("./UCI\ HAR\ Dataset/train/subject_train.txt")
-    subjectest <- read.table("./UCI\ HAR\ Dataset/test/subject_test.txt")
-    testdf <- cbind(testdf, subjectest)
-    traindf <- cbind(traindf, subjectrain)
-    colnames(testdf)[563] <- "subject"
-    colnames(traindf)[563] <- "subject"
-    res <- rbind(testdf, traindf)
-    res <- select(res, grep("[M|m]ean|std|activity|subject", colnames(res), value=T))
-    rm(testlabel)
-    rm(trainlabel)
-    ##write.csv(res, "./res1.csv")
-    res
-}
+library(dplyr)
+library(data.table)
 
 runscript <- function(testdf, traindf){
-    data <- part14(testdf, traindf)
-    newdata <- aggregate(data, by=list(data$activity, data$subject), mean)
-    newdata <- newdata[,1:88]
-    rm(data)
-    write.table(newdata, "./dataset.txt", row.name=F)
-    newdata
+    ##merge datasets then name columns with exaustive names
+    ##and then extract only mean and std measurements
+    features <- read.table("./UCI\ HAR\ Dataset/features.txt")
+    colnames(testdf) <- features$V2
+    colnames(traindf) <- features$V2
+    fulltable <- rbind(testdf, traindf)
+    fulltable <- select(fulltable, grep("-mean\\(\\)|-std\\(\\)", colnames(fulltable)))
+    
+    ##add activity column
+    labels <- read.table("./UCI\ HAR\ Dataset/activity_labels.txt")
+    ytest <- read.table("./UCI\ HAR\ Dataset/test/y_test.txt")
+    ytrain <- read.table("./UCI\ HAR\ Dataset/train/y_train.txt")
+    yfinal <- rbind(ytest, ytrain)
+    yfinal <- inner_join(yfinal, labels, by="V1")
+    activity <- yfinal$V2
+    fulltable <- cbind(fulltable, activity)
+    rm(labels, yfinal, activity, ytest, ytrain)
+    
+    ##add subject
+    testsubject <- read.table("./UCI\ HAR\ Dataset/test/subject_test.txt")
+    trainsubject <- read.table("./UCI\ HAR\ Dataset/train/subject_train.txt")
+    fullsubject <- rbind(testsubject, trainsubject)
+    names(fullsubject)[names(fullsubject)=="V1"] <- "subject"
+    fulltable <- cbind(fulltable, fullsubject)
+    rm(fullsubject, testsubject, trainsubject)
+    
+    ##creating tidy dataset with the mean of all variables, grouped by subject and activity
+    tidydata <- fulltable %>% group_by(subject, activity) %>% arrange(subject, activity) %>% summarize(across(everything(), mean))
+    write.table(tidydata, "./tidy.txt", row.names = F)
+    tidydata
 }
+
+
 
 run <- function(){
     testdf <- read.table("./UCI\ HAR\ Dataset/test/X_test.txt")
